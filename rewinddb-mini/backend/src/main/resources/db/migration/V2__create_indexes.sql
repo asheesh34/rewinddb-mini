@@ -1,0 +1,2 @@
+-- Placeholder migration for indexes and constraints.
+-- Add lookup, filtering, and uniqueness indexes here after the initial schema is finalized.

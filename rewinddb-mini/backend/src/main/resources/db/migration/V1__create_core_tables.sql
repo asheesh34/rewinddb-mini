@@ -1,0 +1,2 @@
+-- Placeholder migration for core RewindDB Mini tables.
+-- Define users, connections, triggers, captured changes, history versions, rollback operations, and audit logs here.
