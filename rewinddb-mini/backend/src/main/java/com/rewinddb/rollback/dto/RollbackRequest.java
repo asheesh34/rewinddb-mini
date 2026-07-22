@@ -16,6 +16,7 @@ public class RollbackRequest {
     @NotNull
     private UUID connectionId;
 
+    @NotNull
     @Positive
     private Long targetVersion;
 }

@@ -16,9 +16,11 @@ public class VersionCompareRequest {
     @NotNull
     private UUID connectionId;
 
+    @NotNull
     @Positive
     private Long sourceVersion;
 
+    @NotNull
     @Positive
     private Long targetVersion;
 }

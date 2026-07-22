@@ -10,14 +10,13 @@ import com.rewinddb.auth.repository.AppUserRepository;
 import com.rewinddb.common.enums.UserRole;
 import com.rewinddb.common.exception.ConflictException;
 import com.rewinddb.common.exception.UnauthorizedException;
+import com.rewinddb.security.CurrentUserProvider;
 import com.rewinddb.security.JwtService;
 import java.time.Instant;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final CurrentUserProvider currentUserProvider;
 
     @Override
     @Transactional
@@ -71,16 +71,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(readOnly = true)
     public UserResponse currentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null
-                || !authentication.isAuthenticated()
-                || authentication instanceof AnonymousAuthenticationToken) {
-            throw new UnauthorizedException("Authentication is required");
-        }
-
-        String email = authentication.getName();
-        AppUser user = appUserRepository.findByEmail(email)
-                .orElseThrow(() -> new UnauthorizedException("Authenticated user was not found"));
+        AppUser user = currentUserProvider.getCurrentUser();
         return appUserMapper.toResponse(user);
     }
 

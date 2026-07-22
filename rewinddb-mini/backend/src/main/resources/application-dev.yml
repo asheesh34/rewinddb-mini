@@ -2,5 +2,15 @@ spring:
   config:
     activate:
       on-profile: dev
+  jpa:
+    show-sql: true
 
-# Development profile placeholder.
+logging:
+  level:
+    root: INFO
+    com.rewinddb: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+

@@ -6,9 +6,9 @@ spring:
     name: rewinddb-mini
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/rewinddb
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/rewinddb}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -34,10 +34,7 @@ spring:
 logging:
   level:
     root: INFO
-    com.rewinddb: DEBUG
-    org.springframework.security: INFO
-    org.hibernate.SQL: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
+    com.rewinddb: INFO
 
 management:
   endpoints:
@@ -57,12 +54,12 @@ springdoc:
     tagsSorter: alpha
 
 jwt:
-  secret: ChangeThisToAVeryLongRandomSecretKeyAtLeast32CharactersLong123456789
-  expiration: 86400000
+  secret: ${JWT_SECRET:ChangeThisToAVeryLongRandomSecretKeyAtLeast32CharactersLong123456789}
+  expiration: ${JWT_EXPIRATION:86400000}
 
 app:
   encryption:
-    secret: ChangeThisToA32CharacterAESKey12345
+    secret: ${APP_ENCRYPTION_SECRET:RewindDbDefaultDevEncryptionKey!}
   listener:
     enabled: true
   rollback:
